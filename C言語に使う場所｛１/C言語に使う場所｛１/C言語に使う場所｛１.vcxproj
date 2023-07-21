@@ -143,6 +143,9 @@
     <ClCompile Include="GameMainScene.cpp" />
     <ClCompile Include="GameOverScene.cpp" />
     <ClCompile Include="InputControl_.cpp" />
+    <ClCompile Include="SceneManafer_.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
+    <ClCompile Include="Stage.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

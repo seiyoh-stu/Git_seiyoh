@@ -25,6 +25,8 @@ void Input_Initialize(void)
 	now_button = NULL;
 	mouse_position_x = NULL;
 	mouse_position_y = NULL;
+
+
 }
 
 /****************
@@ -33,7 +35,23 @@ void Input_Initialize(void)
 * 戻り値：なし
 ****************/
 
-void Input_Updata(void)
+void Input_Update(void)
+{
+	//マウス入力情報
+	old_button = now_button;
+	now_button = GetMouseInput();
+
+	//マウスカーソルの座標を取得
+	GetMousePoint(&mouse_position_x, &mouse_position_y);
+}
+
+/****************
+*入力制御機能：ESCキー入力チェック
+* 引数：なし
+* 戻り値：TRUE(入力された),FALSE(未入力)
+****************/
+
+void Input_Escape(void)
 {
 	int ret = FALSE;
 	//ESCキーが押されたらループを抜ける
