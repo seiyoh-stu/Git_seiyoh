@@ -136,3 +136,47 @@ int StageInitialize(void)
 * 引数：なし
 * 戻り値：なし
 ****************/
+void StageDraw(void) {
+	DrawGraph(0, 0, StageImage, FALSE);
+
+	//アイテムの取得個数を描画
+	for (int i = 0; i < ITEM_MAX; i++)
+	{
+		DrawRotaGraph(540, 245 + i * 30, 0.5f, 0, BlockImage[i + 1], TRUE, 0);
+		DrawFormatString(580, 235 + i * 30, 0xffffff, "%3d", Item[i]);
+	}
+
+	//ブロックを描画
+	for (int i = 0; i < HEIGHT; i++)
+	{
+		for (int j = 0; j < WIDTH; j++)
+		{
+			if (Block[i][j].flg == TRUE && Block[i][j].image != NULL)
+			{
+				DrawGraph(Block[i][j].x, Block[i][j].y, BlockImage[Block[i][j].image], TRUE);
+
+			}
+		}
+	}
+
+	//選択ブロックを描画
+	DrawGraph(Select[SELECT_CURSOR].x* BLOCKSIZE, Select[SELECT_CURSOR], y* BLOCKSIZE, BlockImage[9], TRUE);
+	if (ClickStatus != E_NONE)
+	{
+		DrawGraph(Select[NEXT_CURSOR].x * BLOCKSIZE, Select[NEXT_CURSOR].y * BLOCKSIZE, BlockImage[9], TRUE);
+
+	}
+
+	//ミッションを描画
+	SetFontSize(20);
+	DrawFormatString(590, 211, GetColor(255, 255, 255), "%3d", Stage_Mission);
+
+
+	//アイテムの取得個数を描画
+	for (int i = 0; i < ITEM_MAX; i++)
+	{
+		DrawRotaGraph(540, 245 + i * 30, 0.5f, 0, BlockImage[i + 1], TRUE, 0);
+		DrawFormatString(580, 235 + i * 30, GetColer(255,255,255), "%3d", Item[i]);
+	}
+}
+
