@@ -28,4 +28,4 @@ int SceneManager_initialize(GAME_MODE mode);
 void SceneManager_Update(void);
 void SceneManager_Draw(void);
 
-void Change_scene(GEMA_MODE mode);
+void Change_scene(GAME_MODE mode);

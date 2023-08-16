@@ -294,9 +294,244 @@ if (ClickStatus == E_SECOND)
 	Block[Select[TMP_CURSOR].y + 1][Select[TMP_CURSOR].x + 1].image = TmpBlock;
 
 	//連鎖が3つ以上か調べる
-	if (result == 0)
+	Result = 0;
+	Result += combo_check(Select[NEXT_CURSOR].y + 1, Select[NEXT_CURSOR].x + 1);
+	Result += combo_check(Select[TMP_CURSOR].y + 1, Select[TMP_CURSOR].x + 1);
+
+	//連鎖が3未満なら選択ブロックを元に戻す
+	if (Result == 0)
 	{
 		int TmpBlock = Block[Select[NEXT_CURSOR].y + 1][Select[NEXT_CURSOR].x + 1].image;
-		int TmpBlock = Block[Select[TMP_CURSOR].y + 1][Select[TMP_CURSOR].x + 1].image= Block[Select[TMP_CURSOR].y + 1][Select[TMP_CURSOR].x + 1].image
+		Block[Select[NEXT_CURSOR].y + 1][Select[NEXT_CURSOR].x + 1].image = Block[Select[TMP_CURSOR].y + 1][Select[TMP_CURSOR].x + 1].image;
+		Block[Select[NEXT_CURSOR].y + 1][Select[NEXT_CURSOR].x + 1].image = TmpBlock;
+     }
+	else {
+		//連鎖が３つ以上ならブロックを消しブロック移送処理へ移行する
+		Stage_State = 1;
+	}
+
+	//次にクリックできるようにClockFragを０にする
+	ClickStatus = E_NONE;
+}
+
+/****************
+*ステージ制御機能：フェードアウト処理
+* 引数：なし
+* 戻り値：なし
+****************/
+
+void FadeOutBlock(void)
+{
+	static int BlendMode = 255;
+	int i, j;
+
+	//フェードアウト効果音
+	if (CheckSoundMem(FadeOutSE) == 0)
+	{
+		PlaySoundMem(FadeOutSE, DX_PLAYTYPE_BACK);
+	}
+
+	//描画モードをアルファブレンドする
+	SetDrawBlendMode(DX_BLENDGRAPHTYPE_ALPHA, BlendMode);
+	for (i = 1; i < HEIGHT - 1; i++)
+	{
+		for (j = 1; j < WIDTH - 1; j++)
+		{
+			if (Block[i][j], image == 0)
+			{
+				DrawGraph(Block[i][j], Block[i][j], BlockImage[Block[i][j], backup], TRUE);
+			}
+		}
+	}
+
+	//描画モードをノーブレンドにする
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+	BlendMode -= 5;
+
+	if (BlendMode == 0)
+	{
+		BelendMode = 255;
+		Stage_Status = 2;
+		StopSoudMem(FadeOutSE);
+	}
+}
+
+
+/****************
+*ステージ制御機能：ブロック移動処理
+* 引数：なし
+* 戻り値：なし
+****************/
+
+void MoveBlock(void)
+{
+	int i, j, k;
+	//ブロック移動効果音
+	PkaySoundMem(MoveBlockSE, DX_PLAYTYPE_BACK);
+
+	//↓へ移動する処理
+	for (i = 1; i < HEIGHT - 1; i++)
+	{
+		for (j = 1; j < WIDTH - 1; j++)
+		{
+			if (Block[i][j].image == 0)
+			{
+				for (k = i; k > 0; k--)
+				{
+					Block[k][j].image = Block[k - 1][j].image;
+					Block[k - 1][j].image = 0;
+				}
+			}
+		}
+	}
+
+	//空のブロックを生成する処理
+	for (i = 1; i < HEIGHT - 1; i++)
+	{
+		for (j = 1; j < WIDTH - 1; j++)
+		{
+			if (Block[i][j].image == 0)
+			{
+				Block[i][j].image = GetRand(7) + 1;
+			}
+		}
+	}
+
+	//連鎖チェックへ移行する
+	Stage_Status = 3;
+}
+
+/****************
+*ステージ制御機能：連鎖チェック処理
+* 引数：なし
+* 戻り値：なし
+****************/
+
+void CheckBlock(void)
+{
+	int Resukt = 0;
+	int i, j;
+
+	//ブロック連鎖チェック
+	for (i = 1; i < HEIGHT - 1; i++)
+	{
+		for (j = 1; j < WIDTH - 1; j++)
+		{
+			Result += combo_check(i, j);
+		}
+	}
+
+	//連鎖がなくなればブロック選択へ
+	//そうでなければブロック移動並行して連鎖チェックを接続する
+	if (Result == 0)
+	{
+		//クリアチェック処理へ移行する。
+		Stage_Status = 4;
+	}
+	else
+	{
+		//連鎖が３つ以上ならブロックを消しブロック移動処理へ移行する
+		Stage_Status = 1;
+	}
+}
+
+/****************
+*ステージ制御機能：クリア条件チェック処理
+* 引数：なし
+* 戻り値：なし
+* 備考：クリア条件フラグを０とし、各スクールの削除ブロックがレベルよりも
+数が少なかったらチェック処理を中断してゲームを続行する。
+****************/
+
+void CheckClear(void)
+{
+	int i;
+	for (i = 0; i < ITEM_MAX; i++)
+	{
+		if (Item[i] >= Stage_MIssion)
+		{
+			ClearFlag = TRUE;
+			break;
+		}
+	}
+	if (ClearFlag != TRUE)
+	{
+		Stage_State = 0;
+	}
+}
+
+/****************
+*ステージ制御機能：連鎖チェック処理
+* 引数：なし
+* 戻り値：ミッションクリアしているか
+****************/
+
+int Get_StageClearFlag(void)
+{
+	return ClearFlag;
+}
+
+/****************
+*ステージ制御機能：ミッション情報取得処理
+* 引数：なし
+* 戻り値：ミッションクリアしているか
+****************/
+
+int Get_StageScore(void)
+{
+	return Stage_Score;
+}
+
+/****************
+*ステージ制御機能：ミッション情報取得処理
+* 引数：次ミッションに必要な数値
+* 戻り値：なし
+****************/
+
+void Set_StageMission(int mission)
+{
+	Stage_Mission += mission;
+}
+
+/****************
+*ステージ制御機能：連鎖チェック処理
+* 引数１：ブロックYます
+* 引数２：ブロックXます
+* 戻り値：連鎖有無（０：無し　１：有り
+****************/
+
+int combo_check(int y, int x)
+{
+	int ret = FALSE;
+
+	//縦方向のチェック
+	int CountH = 0;
+	int ColorH = 0;
+	save_block();
+	combo_check_h(y, x, &CountH, &ColorH);
+	if (CountH < 3)
+	{
+		restore_block(); //３個未満なら戻す
+	}
+
+	//横方向のチェック
+	int CountW = 0;
+	int ColorW = 0;
+	seve_block();
+	combo_check_w(y, x, &CountW, &ColorW);
+	if (CountW < 3)
+	{
+		restore_block();
+	}
+	//３つ以上で並んでいるか？
+	if ((CountH >= 3 || Count >= 3))
+	{
+		if (Count >= 3)
+		{
+			Item[ColorH - 1] += CountH;
+			Stage_Score += CountH * 10;
+		}
+		if
 	}
 }

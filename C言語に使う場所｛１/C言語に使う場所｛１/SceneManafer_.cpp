@@ -84,7 +84,7 @@ void ScenneManager_Update(void)
 	//各画面の更新処理
 	switch (Game_Mode)
 	{
-	case E_TTITLE:
+	case E_TITLE:
 			TitleScene_Updete();
 			break;
 		case E_GAMEMAIN:
@@ -112,7 +112,7 @@ void SceneManager_Draw(void)
 	//各画面の描画処理
 	switch (Game_Mode)
 	{
-	case E_TTITLE:
+	case E_TITLE:
 		TitleScene_Draw();
 		break;
 	case E_GAMEMAIN:
