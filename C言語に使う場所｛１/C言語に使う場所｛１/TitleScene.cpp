@@ -89,5 +89,5 @@ void TitleScene_Update(void)
 void TitleScene_Draw(void)
 {
 	//タイトル画面を表示
-	DrawGraph(0,0,TitleImage,FALSE):
+	DrawGraph(0, 0, TitleImage, FALSE);
 }

@@ -12,10 +12,10 @@
 *マクロ定義
 ******************/
 
-#defaine SCREEN_HEIGHT(480)//スクリーンサイズ(高さ)
-#defaine SCREEN_WIDTH(640)//スクリーンサイズ（幅）
-#defaine SCREEN_COLORBIT(32) //スクリーンカラーヒット
-#defaine FONT_SIZE(20) //文字サイズ 
+#define SCREEN_HEIGHT    (480)//スクリーンサイズ(高さ)
+#define SCREEN_WIDTH     (640)//スクリーンサイズ（幅）
+#define SCREEN_COLORBIT  (32) //スクリーンカラーヒット
+#define FONT_SIZE        (20) //文字サイズ 
 
 /*****************
 *型定義
@@ -34,8 +34,8 @@
 ****************/
 
 int WINAPI WinMain(_In_ HISTANCE hInstance, _In_opt_ HISTANCE hPrevInstance,
-	_In_ LPSTR lpCmdLine, _In_ int nShowCmd)
-{
+	_In_ LPSTR lpCmdLine, _In_ int nShowCmd){
+
 	//ウィンドウタイトル設定
 	SetmainWindowText("match 3 Puzzle");
 	//ウィンドウモードで起動
