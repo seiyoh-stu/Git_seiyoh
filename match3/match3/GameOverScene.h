@@ -11,6 +11,6 @@
 *プロトタイプ宣言
 ****************/
 
-int TitleScene_initialize(void);
-void TitleScene_Update(void);
-void TitleScene_Draw(void);
+int GameOverScene_Initialize(void);
+void GameOverScene_Update(void);
+void GameOverScene_Draw(void);

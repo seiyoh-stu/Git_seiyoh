@@ -32,7 +32,7 @@ int TitleScene_Initialize(void)
 	int ret = 0;
 
 	//‰æ‘œ“Ç‚Ýž‚Ýˆ—
-	TitleImage = LoadGraph("images/title,png");
+	TitleImage = LoadGraph("images/title.png");
 	//‰¹Œ¹“Ç‚Ýž‚Ýˆ—
 	TitleBGM = LoadSoundMem("sounds/title_bgm.mp3");
 
@@ -61,17 +61,17 @@ void TitleScene_Update(void)
 		PlaySoundMem(TitleBGM, DX_PLAYTYPE_BACK);
 	}
 
-	if (GetKeyflg(MOUSE_INPUT_LEFT) == TRUE)
+	if (GetKeyFlg(MOUSE_INPUT_LEFT) == TRUE)
 	{
 		if (GetMousePositionX() > 120 && GetMousePositionX() < 290 &&
-			GetMousePositionY() > 260 && GetMousePositionY < 315)
+			GetMousePositionY() > 260 && GetMousePositionY() < 315)
 		{
 			Change_Scene(E_GAMEMAIN);
 
 			StopSoundMem(TitleBGM);
 		}
 		if (GetMousePositionX() > 120 && GetMousePositionX() < 220 &&
-			GetMousePositionY() > 345 && GetMousePositionY < 400)
+			GetMousePositionY() > 345 && GetMousePositionY() < 400)
 		{
 			Change_Scene(E_END);
 

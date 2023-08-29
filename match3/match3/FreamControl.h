@@ -1,7 +1,10 @@
 #pragma once
+
 /******************
 *マクロ定義
 ******************/
+
+#define FREAM_RATE (60U)
 
 /*****************
 *型定義
@@ -11,6 +14,5 @@
 *プロトタイプ宣言
 ****************/
 
-int GameClearScene_initialize(void);
-void GameClearScene_Update(void);
-void GameClearScene_Draw(void);
+void FreamControl_Initialize(void);
+void FreamControl_Update(void);

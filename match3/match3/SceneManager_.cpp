@@ -29,9 +29,9 @@ GAME_MODE Next_Mode;  //ゲーム情報(次)
 * 戻り値：なし
 ****************/
 
-int SceneManafer_Initialize(GAME_MODE mode)
+int SceneManager_Initialize(GAME_MODE mode)
 {
-	Read_Error;
+	int Read_Error;
 
 	//シーン読み込み処理
 	//タイトル画面
@@ -42,21 +42,21 @@ int SceneManafer_Initialize(GAME_MODE mode)
 	}
 
 	//ゲームメイン画面
-	Read_Error = GameMainScene_Initialize():
+	Read_Error = GameMainScene_Initialize();
 		if (Read_Error == D_ERROR)
 		{
 			return D_ERROR;
 	}
 
 	//ゲームクリア画面
-	Resd_Errpr = GameClearScene_Initialize() :
+		Read_Error = GameClearScene_Initialize();
 		if (Read_Error == D_ERROR)
 		{
 			return D_ERROR;
 		}
 
 	//ゲームオーバー画面
-	Resd_Errpr = GameOverScene_Initialize() :
+		Read_Error = GameOverScene_Initialize();
 		if (Read_Error == D_ERROR)
 		{
 			return D_ERROR;
@@ -73,28 +73,28 @@ int SceneManafer_Initialize(GAME_MODE mode)
 * 戻り値：なし
 ****************/
 
-void ScenneManager_Update(void)
+void SceneManager_Update(void)
 {
 	//前フレームとげーむどどが違っていたらシーンを切り替える
 	if (Game_Mode != Next_Mode)
 	{
-		SceneManafer_Initialize(Next_Mode);
+		SceneManager_Initialize(Next_Mode);
 	}
 
 	//各画面の更新処理
 	switch (Game_Mode)
 	{
 	case E_TITLE:
-			TitleScene_Updete();
+			TitleScene_Update();
 			break;
 		case E_GAMEMAIN:
-			GameMainScene_Updete();
+			GameMainScene_Update();
 			break;
 		case E_GAME_CLEAR:
-			GameClearScene_Updete();
+			GameClearScene_Update();
 			break;
 		case E_GAME_OVER:
-			GameOverScene_Updete();
+			GameOverScene_Update();
 			break;
 		default:
 			break;

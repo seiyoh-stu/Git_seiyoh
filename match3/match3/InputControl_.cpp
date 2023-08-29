@@ -51,7 +51,7 @@ void Input_Update(void)
 * 戻り値：TRUE(入力された),FALSE(未入力)
 ****************/
 
-void Input_Escape(void)
+int Input_Escape(void)
 {
 	int ret = FALSE;
 	//ESCキーが押されたらループを抜ける
@@ -60,7 +60,7 @@ void Input_Escape(void)
 		ret = TRUE;
 	}
 
-	return = ret;
+	return ret;
 }
 
 /****************
@@ -106,11 +106,11 @@ int GetNowKey(int key)
 int GetKeyFlg(int key)
 {
 	int ret = FALSE;
-	intkeyflg = now_botton & ~old_button;
+	int keyflg = now_button & ~old_button;
 
 	if ((key & keyflg) != FALSE)
 	{
-		ret=TRUE
+		ret = TRUE;
 	}
 	return ret;
 }

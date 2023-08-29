@@ -7,8 +7,8 @@
 *マクロ定義
 ******************/
 
-#define TIMELIMIT           (3600*3)//制限時間
-#define NUMBER_IMAGE_MAX(10)　　　//数字画像数
+#define TIMELIMIT		        (3600*3)//制限時間
+#define NUMBER_IMAGE_MAX (10)   //数字画像数
 
 /*****************
 *型定義
@@ -43,8 +43,8 @@ int GameMainScene_Initialize(void)
 	int i;
 
 	//画像読込み
-	LoadDivGraph("images/number.png"NUMBER_IMAGE_MAX, 
-		NUMBER_IMAGE_MAX, 1, 60, 120, NumberImage) :
+	LoadDivGraph("images/number.png",NUMBER_IMAGE_MAX,
+		NUMBER_IMAGE_MAX, 1, 60, 120, NumberImage);
 
 		//ステージ機能初期化
 		ret = StageInitialize();
@@ -63,7 +63,7 @@ int GameMainScene_Initialize(void)
 	if (GameCount == 0)
 	{
 		GameScore = 0;       //スコアの初期化
-		GameLeve = 1;        //ゲームレベルの初期化
+		GameLevel = 1;        //ゲームレベルの初期化
 		Set_StageMission(3); //ミッションの初期化
 		GameCount++;         //次回の設定
 
@@ -85,21 +85,21 @@ int GameMainScene_Initialize(void)
 ****************/
 void GameMainScene_Update(void)
 {
-	switch (Get_State())
+	switch (Get_StageState())
 	{
-		case 0;
+	case 0:
 			SelectBlock();//ブロックを選択する
 			break;
-	    case 2;
+	case 2:
 			MoveBlock(); //ブロックを移動させる
 			break;
-		case 3;
+	case 3:
 			CheckBlock();//ブロックの確認
 			break;
-		case 4;
+	case 4:
 			CheckClear();//クリアチェック
 			break;
-		default
+	default:
 			break;
 
 	}
@@ -132,6 +132,9 @@ void GameMainScene_Draw(void)
 	int PosX = 600;
 	int tmp_level = GameLevel;
 	int tmp_score = Get_StageScore();
+
+
+
 	//ステージを描画
 	StageDraw();
 
@@ -150,7 +153,8 @@ void GameMainScene_Draw(void)
 	//スコアの描画
 	PosX = 620;
 	do {
-		DrawRotaGraph(PosX, 160, 0.3f, 0, NumberImage[tmp_level % 10], TRUE);
+		DrawRotaGraph(PosX, 160, 0.3f, 0, NumberImage[tmp_level % 10],
+			TRUE);
 		tmp_score /= 10;
 		PosX -= 20;
 	} while (tmp_score > 0);

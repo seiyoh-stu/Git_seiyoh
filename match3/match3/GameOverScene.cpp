@@ -53,17 +53,17 @@ int GameOverScene_Initialize(void)
 * 戻り値：なし
 ****************/
 
-void GameOverScene_Updata(void)
+void GameOverScene_Update(void)
 {
 	//ゲームオーバー効果音再生チェック
-	if (CheckSoundMem(GameoverSE) == 0)
+	if (CheckSoundMem(GameOverSE) == 0)
 	{
 		if (GameOverFlag == TRUE) {
 			Change_Scene(E_GAME_OVER);
 		}
 		else
 		{
-			PlaySoundMem(GameOverSE, DX_PAYTYPE_BACK);
+			PlaySoundMem(GameOverSE, DX_PLAYTYPE_BACK);
 			GameOverFlag = TRUE;
 		}
 	}
@@ -78,5 +78,5 @@ void GameOverScene_Updata(void)
 void GameOverScene_Draw(void)
 {
 	//ゲームオーバー画像表示
-	DrawGraph(0,0,GameOverImage,FALSE):
+	DrawGraph(0, 0, GameOverImage, FALSE);
 }

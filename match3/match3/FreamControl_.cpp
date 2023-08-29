@@ -13,7 +13,7 @@
 *変数宣言
 *****************/
 
-int Freamtime;
+int FreamTime;
 int NowTime;
 int Wait;
 int LastTime;
@@ -28,9 +28,9 @@ int LastTime;
 * 戻り値：なし
 ****************/
 
-void FreamControl_initialize(void)
+void FreamControl_Initialize(void)
 {
-	Freamtime = ((int)1000.0f / FREA_RATE);
+	FreamTime = ((int)1000.0f / FREAM_RATE);
 	NowTime = 0;
 	Wait = 0;
 	LastTime = 0;
@@ -41,7 +41,7 @@ void FreamControl_initialize(void)
 * 戻り値：なし
 ****************/
 
-void Frea, Control_Update(void)
+void FreamControl_Update(void)
 {
 	NowTime = GetNowCount();
 	Wait = FreamTime - (NowTime - LastTime);

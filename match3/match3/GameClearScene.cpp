@@ -15,7 +15,7 @@
 *****************/
 
 int GameClearImage;
-int GamaClearSE;
+int GameClearSE;
 int GameClearFlag;
 
 /****************
@@ -28,16 +28,16 @@ int GameClearFlag;
 * 戻り値：なし
 ****************/
 
-int GameClearScene_inttialize(void)
+int GameClearScene_Initialize(void)
 {
 	int ret = 0;
 
 	//
 	GameClearImage = LoadGraph("images/gameclear.png");
 	//
-	GamaClearSE = LoadSoundMem("sounds/gameclear_se.mp3");
+	GameClearSE = LoadSoundMem("sounds/gameclear_se.mp3");
 
-	GamaClearFlag = 0;
+	GameClearFlag = 0;
 
 	//
 	if (GameClearImage == -1) {
@@ -61,7 +61,7 @@ void GameClearScene_Update(void)
 
 {
 	//ゲームクリア効果音再生チェック
-	if (CheckSoundMem(GameClearSE) == )
+	if (CheckSoundMem(GameClearSE) == 0)
 	{
 		if (GameClearFlag == TRUE)
 		{
@@ -83,5 +83,5 @@ void GameClearScene_Update(void)
 
 void GameClearScene_Draw(void)
 {
-Drawgraph(0,0,GameClearImage,FALSE);
+DrawGraph(0,0,GameClearImage,FALSE);
 }

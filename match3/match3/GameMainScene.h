@@ -11,6 +11,6 @@
 *プロトタイプ宣言
 ****************/
 
-int GameMainScene_initialize(void);
+int GameMainScene_Initialize(void);
 void GameMainScene_Update(void);
 void GameMainScene_Draw(void);

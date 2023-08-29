@@ -12,11 +12,11 @@
 ****************/
 
 void Input_Initialize(void);
-void input_Update(void);
+void Input_Update(void);
 int Input_Escape(void);
 
-int GetOldkey(int key);
+int GetOldKey(int key);
 int GetNowKey(int key);
 int GetKeyFlg(int key);
-int GetMousepositionX(void);
-int GetMousepositionY(void);
+int GetMousePositionX(void);
+int GetMousePositionY(void);
