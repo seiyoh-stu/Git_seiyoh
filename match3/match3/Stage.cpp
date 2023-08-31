@@ -82,8 +82,8 @@ int StageInitialize(void)
 	int i;
 
 	//画像読み込み
-	LoadDivGraph("images/block,png", BLOCK_IMAGE_MAX, BLOCK_IMAGE_MAX, 1, BLOCKSIZE, BLOCKSIZE, BlockImage);
-	StageImage = LoadGraph("Image/stage.png");
+	LoadDivGraph("images/block.png", BLOCK_IMAGE_MAX, BLOCK_IMAGE_MAX, 1, BLOCKSIZE, BLOCKSIZE, BlockImage);
+	StageImage = LoadGraph("images/stage.png");
 	//音源読み込み
 	ClickSE = LoadSoundMem("sounds/click_se.mp3");
 	FadeOutSE= LoadSoundMem("sounds/fadeout_se.mp3");
@@ -218,12 +218,14 @@ void CreateBlock(void)
 			}
 			}*/
 			//ブロック連鎖チェック
-		for (i = 1; i < HEIGHT - 1; i++){
-			for(j=1;j<WIDTH-1;j++){
-			Check += combo_check(i, j);
+		for (i = 1; i < HEIGHT - 1; i++)
+		{
+			for(j = 1;j < WIDTH - 1;j++)
+			{
+				Check += combo_check(i, j);
+			}
 		}
-		}
-	} while (Check != 0);
+	} while(Check != 0);
 
 
 
@@ -272,8 +274,8 @@ void SelectBlock(void)
 		PlaySoundMem(ClickSE, DX_PLAYTYPE_BACK);
 
 		if (ClickStatus == E_NONE) {
-			Select[NEXT_CURSOR].x = Select[NEXT_CURSOR].x;
-			Select[NEXT_CURSOR].y = Select[NEXT_CURSOR].y;
+			Select[NEXT_CURSOR].x = Select[SELECT_CURSOR].x;
+			Select[NEXT_CURSOR].y = Select[SELECT_CURSOR].y;
 			ClickStatus = E_ONCE;
 		}
 		else if (ClickStatus == E_ONCE &&
@@ -287,8 +289,9 @@ void SelectBlock(void)
 					== 1)))
 		{
 			Select[TMP_CURSOR].x = Select[SELECT_CURSOR].x;
-		}Select[NEXT_CURSOR].y = Select[NEXT_CURSOR].y;
+			Select[TMP_CURSOR].y = Select[SELECT_CURSOR].y;
 			ClickStatus = E_SECOND;
+		}
 	}
 
 	//選択ブロックを交換する
@@ -308,10 +311,10 @@ void SelectBlock(void)
 		//連鎖が３未満なら選択ブロックを元に戻す
 		if (Result == 0)
 		{
-			int TmpBlock = Block[Select[NEXT_CURSOR].y + 1][Select[NEXT_CURSOR].x + 1].image;
-			Block[Select[NEXT_CURSOR].y + 1][Select[NEXT_CURSOR].x + 1].image =
-				Block[Select[TMP_CURSOR].y + 1][Select[TMP_CURSOR].x + 1].image;
-			Block[Select[TMP_CURSOR].y + 1][Select[TMP_CURSOR].x + 1].image = TmpBlock;
+		int TmpBlock = Block[Select[NEXT_CURSOR].y + 1][Select[NEXT_CURSOR].x + 1].image;
+		Block[Select[NEXT_CURSOR].y + 1][Select[NEXT_CURSOR].x + 1].image =
+		Block[Select[TMP_CURSOR].y + 1][Select[TMP_CURSOR].x + 1].image;
+		Block[Select[TMP_CURSOR].y + 1][Select[TMP_CURSOR].x + 1].image = TmpBlock;
 
 		}
 		else
@@ -585,7 +588,7 @@ void combo_check_h(int y, int x, int* cnt, int* col)
 	Block[y][x].image = 0;
 	(*cnt)++;
 
-	if (Block[y + 1][x].image == Color);
+	if (Block[y + 1][x].image == Color)
 	{
 		combo_check_h(y + 1, x, cnt, col);
 	}
@@ -614,13 +617,13 @@ void combo_check_w(int y, int x, int* cnt, int* col)
 	Block[y][x].image = 0;
 	(*cnt)++;
 
-	if (Block[y][x + 1].image == Color);
+	if (Block[y][x + 1].image == Color)
 	{
-		combo_check_h(y, x + 1, cnt, col);
+		combo_check_w(y, x + 1, cnt, col);
 	}
-	if (Block[y][x - 1].image == Color);
+	if (Block[y][x - 1].image == Color)
 	{
-		combo_check_h(y, x - 1, cnt, col);
+		combo_check_w(y, x - 1, cnt, col);
 	}
 }
 
